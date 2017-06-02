@@ -161,7 +161,7 @@ public class WSClient {
 	protected String md5Hex(String input) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		byte[] hash = md.digest(input.getBytes());
-		return new BigInteger(1, hash).toString(16);
+		return String.format("%032x", new BigInteger(1, hash));
 	}
 	
 	/**
