@@ -375,6 +375,31 @@ public class WSClient {
 		return result;
 	}
 	
+	/**
+	 * Do Update Operation
+	 * @param module
+	 * @param valueMap
+	 * @return
+	 */
+	public JSONObject doUpdate(String module, Map valueMap) {
+		// Perform re-login if required.
+		checkLogin();
+		
+		Map postdata = new HashMap();
+		postdata.put("operation", "update");
+		postdata.put("sessionName", _sessionid);
+		postdata.put("elementType", module);
+		postdata.put("element", toJSONString(valueMap));
+		
+		Object response = _client.doPost(postdata, true);
+		if(hasError(response)) {
+			return null;
+		}
+		JSONObject result = (JSONObject)((JSONObject)response).get("result");
+		
+		return result;
+	}
+	
 	public Object doInvoke(String method, Object params) {
 		return doInvoke(method, params, "GET");
 	}
