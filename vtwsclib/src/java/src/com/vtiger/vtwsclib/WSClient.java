@@ -400,6 +400,29 @@ public class WSClient {
 		return result;
 	}
 	
+	/**
+	 * Do Delete Operation
+	 * @param id
+	 * @return
+	 */
+	public JSONObject doDelete(String id) {
+		// Perform re-login if required.
+		checkLogin();
+		
+		Map postdata = new HashMap();
+		postdata.put("operation", "delete");
+		postdata.put("sessionName", _sessionid);
+		postdata.put("id", id);
+		
+		Object response = _client.doPost(postdata, true);
+		if(hasError(response)) {
+			return null;
+		}
+		JSONObject result = (JSONObject)((JSONObject)response).get("result");
+		
+		return result;
+	}
+	
 	public Object doInvoke(String method, Object params) {
 		return doInvoke(method, params, "GET");
 	}
